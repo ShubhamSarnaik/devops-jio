@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: _ComponentName_
+spec:
+  schedule: "0/2 * * * *"  # Set your desired cron schedule here
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: _ComponentName_
+            image: _DockerRegistryUrl/ImageRepositoryName:Build.BuildNumber_
+            imagePullPolicy: IfNotPresent
+            command: [ "python", "StoryHybridModule.py"]   # Replace "script.py" with the name of your .py file
+          containers:
+          - name: _ComponentName_
+            image: _DockerRegistryUrl/ImageRepositoryName:Build.BuildNumber_
+            command: [ "python", "PopularRecommendationSystem.py"]
+            imagePullPolicy: IfNotPresent    
+              # items:
+              # - key: PopularRecommendationSystem.py
+              #   path: PopularRecommendationSystem.py
+              # - key: StoryHybridModule.py
+              #   path: StoryHybridModule.py                
+          restartPolicy: OnFailure
